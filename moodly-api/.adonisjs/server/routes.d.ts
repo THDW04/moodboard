@@ -11,6 +11,8 @@ export type ScannedRoutes = {
     'profile.profile.show': { paramsTuple?: []; params?: {} }
     'profile.access_tokens.destroy': { paramsTuple?: []; params?: {} }
     'visual_references.store': { paramsTuple?: []; params?: {} }
+    'visual_references.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'visual_references.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
     'visual_references.index': { paramsTuple?: []; params?: {} }
@@ -27,6 +29,12 @@ export type ScannedRoutes = {
     'auth.access_tokens.store': { paramsTuple?: []; params?: {} }
     'profile.access_tokens.destroy': { paramsTuple?: []; params?: {} }
     'visual_references.store': { paramsTuple?: []; params?: {} }
+  }
+  PUT: {
+    'visual_references.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  DELETE: {
+    'visual_references.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

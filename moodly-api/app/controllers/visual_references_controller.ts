@@ -39,4 +39,48 @@ export default class VisualReferencesController {
         return response.created(reference)
     }
 
+
+    async destroy({ params, response }: HttpContext) {
+        const reference = await VisualReference.find(params.id)
+
+        if (!reference) {
+            return response.notFound({
+                message: 'Référence introuvable',
+            })
+        }
+
+        await reference.delete()
+
+        return response.ok({
+            message: 'Référence supprimée avec succès',
+        })
+    }
+
+
+    async update({ params, request, response }: HttpContext) {
+        const reference = await VisualReference.find(params.id)
+
+        if (!reference) {
+            return response.notFound({
+                message: 'Référence introuvable',
+            })
+        }
+
+        const payload = await vine.validate({
+            schema: createVisualReferenceValidator,
+            data: request.all(),
+        })
+
+        reference.title = payload.title
+        reference.category = payload.category
+        reference.imageUrl = payload.imageUrl ?? null
+        reference.sourceUrl = payload.sourceUrl ?? null
+        reference.notes = payload.notes ?? null
+
+        await reference.save()
+
+        return response.ok(reference)
+    }
+
+
 }

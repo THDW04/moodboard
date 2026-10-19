@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getReferences } from './services/references'
 import type { VisualReference } from './services/references'
+import ReferenceForm from './components/ReferenceForm'
+import EditReferenceForm from './components/EditReferenceForm'
 import './App.css'
 
 function App() {
@@ -16,6 +18,42 @@ function App() {
       })
       .finally(() => setLoading(false))
   }, [])
+
+  const [editingReference, setEditingReference] =
+    useState<VisualReference | null>(null)
+
+
+  async function handleDelete(id: number) {
+    const confirmed = window.confirm(
+      'Veux-tu vraiment supprimer cette inspiration ?'
+    )
+
+    if (!confirmed) return
+
+    try {
+      const response = await fetch(
+        `http://localhost:3333/references/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('La suppression a échoué.')
+      }
+
+      setReferences((current) =>
+        current.filter((reference) => reference.id !== id)
+      )
+    } catch (error) {
+      console.error(error)
+      alert('Impossible de supprimer cette inspiration.')
+    }
+  }
+
 
   return (
     <main className="moodly">
@@ -61,11 +99,44 @@ function App() {
                     Voir la source ↗
                   </a>
                 )}
+
+                <button
+                  type="button"
+                  onClick={() => setEditingReference(reference)}
+                >
+                  Modifier
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(reference.id)}
+                >
+                  Supprimer
+                </button>
               </div>
             </article>
           ))}
         </div>
       </section>
+      <ReferenceForm />
+
+      {editingReference && (
+        <EditReferenceForm
+          reference={editingReference}
+          onUpdated={(updatedReference) => {
+            setReferences((current) =>
+              current.map((reference) =>
+                reference.id === updatedReference.id
+                  ? updatedReference
+                  : reference
+              )
+            )
+            setEditingReference(null)
+          }}
+          onCancel={() => setEditingReference(null)}
+        />
+      )}
     </main>
   )
 }

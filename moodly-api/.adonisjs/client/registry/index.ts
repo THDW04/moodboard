@@ -48,6 +48,18 @@ const routes = {
     tokens: [[0,"references"]],
     types: placeholder as Registry['visual_references.store']['types'],
   },
+  'visual_references.update': {
+    methods: ["PUT"],
+    pattern: '/references/:id',
+    tokens: [[0,"references"],[1,"id"]],
+    types: placeholder as Registry['visual_references.update']['types'],
+  },
+  'visual_references.destroy': {
+    methods: ["DELETE"],
+    pattern: '/references/:id',
+    tokens: [[0,"references"],[1,"id"]],
+    types: placeholder as Registry['visual_references.destroy']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

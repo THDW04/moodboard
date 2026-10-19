@@ -98,4 +98,30 @@ export interface Registry {
       rawResponse: ExtractRawResponse<unknown>
     }
   }
+  'visual_references.update': {
+    methods: ["PUT"]
+    pattern: '/references/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: unknown
+      errorResponse: unknown
+      rawResponse: ExtractRawResponse<unknown>
+    }
+  }
+  'visual_references.destroy': {
+    methods: ["DELETE"]
+    pattern: '/references/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: unknown
+      errorResponse: unknown
+      rawResponse: ExtractRawResponse<unknown>
+    }
+  }
 }

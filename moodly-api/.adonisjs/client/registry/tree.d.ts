@@ -6,6 +6,8 @@ export interface ApiDefinition {
     index: typeof routes['visual_references.index']
     show: typeof routes['visual_references.show']
     store: typeof routes['visual_references.store']
+    update: typeof routes['visual_references.update']
+    destroy: typeof routes['visual_references.destroy']
   }
   auth: {
     newAccount: {

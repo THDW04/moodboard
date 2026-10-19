@@ -43,3 +43,13 @@ router
   .prefix('/api/v1')
 
 router.post('/references', [VisualReferencesController, 'store'])
+
+router.put('/references/:id', [
+  VisualReferencesController,
+  'update',
+])
+
+router.delete('/references/:id', [
+  VisualReferencesController,
+  'destroy',
+])
