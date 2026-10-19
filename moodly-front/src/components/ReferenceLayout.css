@@ -1,9 +1,10 @@
 .moodly-layout {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: 240px minmax(0, 1fr) 0px;
+  gap: 0; /* l'espacement passe en margin/padding pour ne pas laisser de vide quand le panneau est fermé */
   align-items: start;
   transition: grid-template-columns 0.3s ease;
+  min-height: 100vh;
 }
 
 .moodly-layout.has-detail {
@@ -12,8 +13,7 @@
 
 /* Filtres */
 .filters {
-  position: sticky;
-  top: 16px;
+  margin-right: 24px;
 }
 
 .filters-field {
@@ -43,26 +43,28 @@
 }
 
 /* Grille d'images : s'adapte automatiquement à la largeur dispo */
+.reference-grid-area {
+  min-width: 0;
+}
+
+/* Masonry : les colonnes se recalculent selon la largeur dispo */
 .reference-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
+  column-width: 180px;
+  column-gap: 12px;
 }
 
 .reference-thumb {
-  padding: 0;
+  margin: 0 0 12px;
   border: 2px solid transparent;
   border-radius: 8px;
   overflow: hidden;
-  background: none;
   cursor: pointer;
-  aspect-ratio: 1 / 1;
+  break-inside: avoid;
 }
 
 .reference-thumb img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
   transition: transform 0.2s ease;
 }
@@ -80,20 +82,42 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  min-height: 120px;
   padding: 8px;
+  box-sizing: border-box;
   font-size: 0.9rem;
 }
 
-/* Panneau de détail */
-.reference-detail {
+/* Panneau de détail : le conteneur suit la largeur de la colonne et masque ce qui dépasse */
+.reference-detail-wrapper {
   position: sticky;
   top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s; /* masqué (et non focusable) après la fermeture */
+}
+
+.moodly-layout.has-detail .reference-detail-wrapper {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Panneau : largeur fixe, glisse depuis la droite */
+.reference-detail {
+  box-sizing: border-box;
+  width: 360px;
+  padding-left: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: calc(100vh - 32px);
-  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.moodly-layout.has-detail .reference-detail {
+  transform: translateX(0);
 }
 
 .reference-detail img {
@@ -114,5 +138,23 @@
   .moodly-layout,
   .moodly-layout.has-detail {
     grid-template-columns: 1fr;
+  }
+
+  .filters {
+    margin-right: 0;
+  }
+
+  .reference-detail-wrapper {
+    display: none;
+  }
+
+  .moodly-layout.has-detail .reference-detail-wrapper {
+    display: block;
+  }
+
+  .reference-detail {
+    width: 100%;
+    padding-left: 0;
+    transform: none;
   }
 }

@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 type Props = {
   categories: string[]
   selectedCategory: string
@@ -14,43 +16,57 @@ export default function ReferenceFilters({
   onSearchChange,
 }: Props) {
   return (
-    <aside className="filters">
-      <h2>Filtres</h2>
+    <aside className="nav-container">
+      <header className="moodly-header">
+        <div className="title-wrapper">
+          <h1>Moodly</h1>
+          <p>Ton espace d'inspiration créative.</p>
+        </div>
 
-      <label className="filters-field">
-        <span>Recherche</span>
-        <input
-          type="search"
-          value={search}
-          placeholder="Titre..."
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
-      </label>
+        <nav>
+          <NavLink to="/" end>Accueil</NavLink>
+          <NavLink to="/ajouter">Ajouter une ref</NavLink>
+        </nav>
+      </header>
 
-      <div className="filters-field">
-        <span>Catégorie</span>
-        <ul className="filters-list">
-          <li>
-            <button
-              type="button"
-              className={selectedCategory === '' ? 'active' : ''}
-              onClick={() => onCategoryChange('')}
-            >
-              Toutes
-            </button>
-          </li>
-          {categories.map((category) => (
-            <li key={category}>
+      <div className="filters">
+        <h2>Filtres</h2>
+
+        <label className="filters-field">
+          <span>Recherche</span>
+          <input
+            type="search"
+            value={search}
+            placeholder="Titre..."
+            onChange={(e) => onSearchChange(e.target.value)}
+          />
+        </label>
+
+        <div className="filters-field">
+          <span>Catégorie</span>
+          <ul className="filters-list">
+            <li>
               <button
                 type="button"
-                className={selectedCategory === category ? 'active' : ''}
-                onClick={() => onCategoryChange(category)}
+                className={selectedCategory === '' ? 'active' : ''}
+                onClick={() => onCategoryChange('')}
               >
-                {category}
+                Toutes
               </button>
             </li>
-          ))}
-        </ul>
+            {categories.map((category) => (
+              <li key={category}>
+                <button
+                  type="button"
+                  className={selectedCategory === category ? 'active' : ''}
+                  onClick={() => onCategoryChange(category)}
+                >
+                  {category}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </aside>
   )

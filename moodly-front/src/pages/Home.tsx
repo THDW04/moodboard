@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { getReferences } from '../services/references'
 import type { VisualReference } from '../services/references'
 import EditReferenceForm from '../components/EditReferenceForm'
@@ -46,6 +46,16 @@ function HomePage() {
   const selectedReference =
     references.find((r) => r.id === selectedId) ?? null
 
+  // Garde la dernière ref affichée pour que le contenu reste visible
+  // pendant l'animation de fermeture du panneau
+  const lastReference = useRef<VisualReference | null>(null)
+
+  useEffect(() => {
+    if (selectedReference) lastReference.current = selectedReference
+  }, [selectedReference])
+
+  const displayedReference = selectedReference ?? lastReference.current
+
   async function handleDelete(id: number) {
     const confirmed = window.confirm(
       'Veux-tu vraiment supprimer cette inspiration ?'
@@ -79,7 +89,7 @@ function HomePage() {
           onSearchChange={setSearch}
         />
 
-        <section>
+        <section className="reference-grid-area">
           <h2>Mes inspirations</h2>
 
           {loading && <p>Chargement des inspirations...</p>}
@@ -97,14 +107,19 @@ function HomePage() {
           />
         </section>
 
-        {selectedReference && (
-          <ReferenceDetail
-            reference={selectedReference}
-            onClose={() => setSelectedId(null)}
-            onEdit={setEditingReference}
-            onDelete={handleDelete}
-          />
-        )}
+        <div
+          className="reference-detail-wrapper"
+          aria-hidden={!selectedReference}
+        >
+          {displayedReference && (
+            <ReferenceDetail
+              reference={displayedReference}
+              onClose={() => setSelectedId(null)}
+              onEdit={setEditingReference}
+              onDelete={handleDelete}
+            />
+          )}
+        </div>
       </div>
 
       {editingReference && (

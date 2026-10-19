@@ -1,70 +1,65 @@
-#root {
-  min-height: 100vh;
+@font-face {
+    font-family: 'Inktera';
+    src: url('../public/fonts/InkteraDemoRegular.woff2') format('woff2'),
+        url('../public/fonts/InkteraDemoRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-.moodly {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 48px 24px;
-  color: #292522;
+@font-face {
+    font-family: 'Cabinet';
+    src: url('../public/fonts/CabinetGrotesk-Variable.woff2') format('woff2'),
+        url('../public/fonts/CabinetGrotesk-Variable.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-.moodly-header {
-  margin-bottom: 56px;
+:root{
+  --title-font: 'Inktera', sans-serif;
+  --text-font: 'Cabinet', sans-serif;
 }
 
-.moodly-header h1 {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-size: 3rem;
-  letter-spacing: -2px;
+  padding: 0;
 }
 
-.moodly-header h1 span {
-  color: #b77b60;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--text-font);
 }
 
-.moodly-header p {
-  color: #77706a;
+p, span, a, li, label, input, button {
+  font-family: var(--text-font);
 }
 
-.reference-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+.moodly-header{
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
-.reference-card {
-  overflow: hidden;
-  border: 1px solid #e8e1db;
-  border-radius: 16px;
-  background: #fffdfb;
+.moodly-header nav{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.reference-card img {
-  display: block;
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
-  height: 220px;
-  object-fit: cover;
+  gap: 24px;
+  padding: 12px 24px;
 }
 
-.reference-content {
-  padding: 18px;
+.references-container{
+  padding: 12px 24px; 
 }
 
-.reference-category {
-  color: #9a654d;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.reference-content h3 {
-  margin: 10px 0;
-}
-
-.reference-content p {
-  color: #77706a;
-}
-
-.reference-content a {
-  color: #8b563e;
+.reference-thumb{
+  background-color: #da0000 !important;
 }
