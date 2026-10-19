@@ -2,6 +2,11 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
+  visualReferences: {
+    index: typeof routes['visual_references.index']
+    show: typeof routes['visual_references.show']
+    store: typeof routes['visual_references.store']
+  }
   auth: {
     newAccount: {
       store: typeof routes['auth.new_account.store']

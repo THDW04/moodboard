@@ -6,6 +6,18 @@ import type { ApiDefinition } from './tree.d.ts'
 const placeholder: any = {}
 
 const routes = {
+  'visual_references.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/references',
+    tokens: [[0,"references"]],
+    types: placeholder as Registry['visual_references.index']['types'],
+  },
+  'visual_references.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/references/:id',
+    tokens: [[0,"references"],[1,"id"]],
+    types: placeholder as Registry['visual_references.show']['types'],
+  },
   'auth.new_account.store': {
     methods: ["POST"],
     pattern: '/api/v1/auth/signup',
@@ -29,6 +41,12 @@ const routes = {
     pattern: '/api/v1/account/logout',
     tokens: [[0,"api"],[0,"v1"],[0,"account"],[0,"logout"]],
     types: placeholder as Registry['profile.access_tokens.destroy']['types'],
+  },
+  'visual_references.store': {
+    methods: ["POST"],
+    pattern: '/references',
+    tokens: [[0,"references"]],
+    types: placeholder as Registry['visual_references.store']['types'],
   },
 } as const satisfies Record<string, AdonisEndpoint>
 

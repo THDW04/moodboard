@@ -48,3 +48,26 @@ export class UserSchema extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
+
+export class VisualReferenceSchema extends BaseModel {
+  static $columns = ['category', 'createdAt', 'id', 'imageUrl', 'isFavorite', 'notes', 'sourceUrl', 'title', 'updatedAt'] as const
+  $columns = VisualReferenceSchema.$columns
+  @column()
+  declare category: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare imageUrl: string | null
+  @column()
+  declare isFavorite: boolean | null
+  @column()
+  declare notes: string | null
+  @column()
+  declare sourceUrl: string | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
