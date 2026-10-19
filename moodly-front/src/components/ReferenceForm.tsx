@@ -4,7 +4,8 @@ import type { FormEvent } from 'react'
 export default function ReferenceForm() {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
+  const [image, setImage] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
   const [notes, setNotes] = useState('')
 
@@ -19,22 +20,26 @@ export default function ReferenceForm() {
     setSuccess('')
     setIsSubmitting(true)
 
-    const refData = {
-      title: title.trim(),
-      category: category.trim(),
-      imageUrl: imageUrl.trim() || null,
-      sourceUrl: sourceUrl.trim() || null,
-      notes: notes.trim() || null,
-    }
+
 
     try {
+      const formData = new FormData()
+
+      formData.append('title', title.trim())
+      formData.append('category', category.trim())
+      formData.append('sourceUrl', sourceUrl.trim())
+      formData.append('notes', notes.trim())
+
+      if (image) {
+        formData.append('image', image)
+      }
+
       const response = await fetch('http://localhost:3333/references', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify(refData),
+        body: formData,
       })
 
       if (!response.ok) {
@@ -46,9 +51,13 @@ export default function ReferenceForm() {
 
       setTitle('')
       setCategory('')
-      setImageUrl('')
+      setImage(null)
+      setImagePreview('')
       setSourceUrl('')
       setNotes('')
+
+      const fileInput = document.getElementById('image') as HTMLInputElement
+      if (fileInput) fileInput.value = ''
 
       setSuccess('Inspiration ajoutée avec succès !')
     } catch (err) {
@@ -60,6 +69,7 @@ export default function ReferenceForm() {
     } finally {
       setIsSubmitting(false)
     }
+
   }
 
   return (
@@ -95,15 +105,47 @@ export default function ReferenceForm() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="imageUrl">Lien de l'image</label>
+        <label htmlFor="image">Image de l’inspiration</label>
+
         <input
-          type="url"
-          name="imageUrl"
-          id="imageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://exemple.com/image.jpg"
+          id="image"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={(event) => {
+            const file = event.target.files?.[0]
+
+            if (!file) {
+              setImage(null)
+              setImagePreview('')
+              return
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+              setError('L’image ne doit pas dépasser 5 Mo.')
+              event.target.value = ''
+              setImage(null)
+              setImagePreview('')
+              return
+            }
+
+            setError('')
+            setImage(file)
+            setImagePreview(URL.createObjectURL(file))
+          }}
         />
+
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="Aperçu de l’image sélectionnée"
+            style={{
+              width: '200px',
+              maxHeight: '200px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+            }}
+          />
+        )}
       </div>
 
       <div className="form-group">

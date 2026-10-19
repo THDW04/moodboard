@@ -34,7 +34,7 @@ export default function ReferenceGrid({
           title={reference.title}
         >
           {reference.imageUrl ? (
-            <img src={reference.imageUrl} alt="" />
+            <img src={`http://localhost:3333${reference.imageUrl}`} alt="" />
           ) : (
             <span className="reference-thumb-empty">
               {reference.title}

@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Inktera';
-    src: url('../public/fonts/InkteraDemoRegular.woff2') format('woff2'),
-        url('../public/fonts/InkteraDemoRegular.woff') format('woff');
+    src: url('/fonts/InkteraDemoRegular.woff2') format('woff2'),
+        url('/fonts/InkteraDemoRegular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'Cabinet';
-    src: url('../public/fonts/CabinetGrotesk-Variable.woff2') format('woff2'),
-        url('../public/fonts/CabinetGrotesk-Variable.woff') format('woff');
+    src: url('/fonts/CabinetGrotesk-Variable.woff2') format('woff2'),
+        url('/fonts/CabinetGrotesk-Variable.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

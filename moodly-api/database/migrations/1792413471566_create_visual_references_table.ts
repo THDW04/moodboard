@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.string('source_url').nullable()
       table.string('category').notNullable()
       table.text('notes').nullable()
-      table.boolean('is_favorite').defaultTo(false)
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

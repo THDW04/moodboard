@@ -20,7 +20,7 @@ export default function ReferenceDetail({ reference, onClose, onEdit, onDelete }
       </button>
 
       {reference.imageUrl && (
-        <img src={reference.imageUrl} alt={reference.title} />
+        <img src={`http://localhost:3333${reference.imageUrl}`} alt={reference.title} />
       )}
 
       <span className="reference-category">{reference.category}</span>

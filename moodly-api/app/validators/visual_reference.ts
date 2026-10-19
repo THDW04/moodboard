@@ -6,5 +6,4 @@ export const createVisualReferenceValidator = vine.object({
     imageUrl: vine.string().trim().url().optional(),
     sourceUrl: vine.string().trim().url().optional(),
     notes: vine.string().trim().optional(),
-    isFavorite: vine.boolean().optional(),
 })
