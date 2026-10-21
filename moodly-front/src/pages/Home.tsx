@@ -5,7 +5,7 @@ import EditReferenceForm from '../components/EditReferenceForm'
 import ReferenceFilters from '../components/Filters'
 import ReferenceGrid from '../components/GridReferences'
 import ReferenceDetail from '../components/DetailRef'
-import '../components/ReferenceLayout.css'
+import './Layout.css'
 
 function HomePage() {
   const [references, setReferences] = useState<VisualReference[]>([])
@@ -90,7 +90,7 @@ function HomePage() {
         />
 
         <section className="reference-grid-area">
-          <h2>Mes inspirations</h2>
+         {/* <h2>Mes inspirations</h2> */}
 
           {loading && <p>Chargement des inspirations...</p>}
           {error && <p role="alert">{error}</p>}

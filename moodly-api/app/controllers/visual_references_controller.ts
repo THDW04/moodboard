@@ -91,6 +91,7 @@ export default class VisualReferencesController {
     }
 
 
+
     async update({ params, request, response }: HttpContext) {
         const reference = await VisualReference.find(params.id)
 
@@ -100,21 +101,60 @@ export default class VisualReferencesController {
             })
         }
 
-        const payload = await vine.validate({
-            schema: createVisualReferenceValidator,
-            data: request.all(),
+        // 1. Récupérer le fichier image envoyé
+        const image = request.file('image', {
+            size: '2mb',
+            extnames: ['jpg', 'jpeg', 'png', 'webp'],
         })
 
+        if (image && !image.isValid) {
+            return response.badRequest({
+                message: 'Image invalide. Formats acceptés : JPG, PNG et WEBP, 2 Mo maximum.',
+                errors: image.errors,
+            })
+        }
+
+        // 2. Valider les champs texte
+        const data = request.all()
+
+        const payload = await vine.validate({
+            schema: createVisualReferenceValidator,
+            data: {
+                ...data,
+                sourceUrl: data.sourceUrl?.trim() || undefined,
+                notes: data.notes?.trim() || undefined,
+            },
+        })
+
+        // 3. Mettre à jour les informations
         reference.title = payload.title
         reference.category = payload.category
-        reference.imageUrl = payload.imageUrl ?? null
         reference.sourceUrl = payload.sourceUrl ?? null
         reference.notes = payload.notes ?? null
+
+        // 4. Remplacer l'image uniquement si un nouveau fichier est envoyé
+        if (image) {
+            const fileName = `${string.uuid()}.${image.extname}`
+
+            await image.move(app.makePath('public/uploads'), {
+                name: fileName,
+            })
+
+            if (!image.isValid) {
+                return response.badRequest({
+                    message: 'Impossible de traiter cette image.',
+                    errors: image.errors,
+                })
+            }
+
+            reference.imageUrl = `/uploads/${fileName}`
+        }
 
         await reference.save()
 
         return response.ok(reference)
     }
+
 
 
 }

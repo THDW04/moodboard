@@ -1,0 +1,46 @@
+/* Masonry : les colonnes se recalculent selon la largeur dispo */
+.reference-grid {
+  column-width: 250px;
+  column-gap: 12px;
+}
+
+.reference-thumb {
+  margin: 0 0 12px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  break-inside: avoid;
+
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.reference-thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.reference-thumb:hover img {
+  transform: scale(1.04);
+}
+
+.reference-thumb.selected {
+  border-color: var(--color-secondary);
+}
+
+.reference-thumb-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 120px;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}

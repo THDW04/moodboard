@@ -1,0 +1,56 @@
+/* Pop-up de modification */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(26, 5, 10, 0.7);
+  overflow-y: auto;
+}
+
+.reference-form.modal-content {
+  margin: auto;
+  background-color: var(--background-color);
+  border: 1px solid var(--color-secondary);
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  gap: 16px;
+}
+
+#edit-modal-title{
+  text-align: center;
+}
+
+.edit-form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-form-actions button, .btn-img-cancel {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--color-secondary);
+}
+
+.btn-img-cancel{
+  width: fit-content;
+  background-color: #f2a3a3;
+}
+
+.edit-form-actions button:first-child {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.edit-form-actions button:last-child {
+  background-color: #d6d6d6;
+  color: var(--color-secondary);
+}

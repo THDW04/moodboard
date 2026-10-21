@@ -1,0 +1,48 @@
+/* Mise en page commune (pages Home et AddRef) */
+.moodly-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+  min-height: 100vh;
+}
+
+.reference-grid-area {
+  min-width: 0;
+  padding: 12px 24px;
+}
+
+.moodly-layout.has-detail .reference-grid-area {
+  padding-right: calc(360px + 24px);
+}
+
+/* Page d'ajout */
+.add-form-page .filters {
+  display: none;
+}
+
+.add-reference {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+
+  .moodly-layout,
+  .moodly-layout.has-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-grid-area {
+    padding:24px !important;
+  }
+
+  .moodly-layout.has-detail .reference-grid-area {
+    padding-right: 24px;
+  }
+}

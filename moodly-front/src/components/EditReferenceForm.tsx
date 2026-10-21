@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { VisualReference } from '../services/references'
+import './ReferenceForm.css'
+import './EditReferenceForm.css'
 
 type EditReferenceFormProps = {
   reference: VisualReference
@@ -15,24 +17,32 @@ export default function EditReferenceForm({
 }: EditReferenceFormProps) {
   const [title, setTitle] = useState(reference.title)
   const [category, setCategory] = useState(reference.category)
-  const [imageUrl, setImageUrl] = useState(reference.imageUrl ?? '')
+  const [image, setImage] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState(
+    reference.imageUrl
+      ? `http://localhost:3333${reference.imageUrl}`
+      : ''
+  )
   const [sourceUrl, setSourceUrl] = useState(reference.sourceUrl ?? '')
   const [notes, setNotes] = useState(reference.notes ?? '')
 
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
     setIsSubmitting(true)
 
-    const refData = {
-      title: title.trim(),
-      category: category.trim(),
-      imageUrl: imageUrl.trim() || null,
-      sourceUrl: sourceUrl.trim() || null,
-      notes: notes.trim() || null,
+    const formData = new FormData()
+    formData.append('title', title.trim())
+    formData.append('category', category.trim())
+    formData.append('sourceUrl', sourceUrl.trim())
+    formData.append('notes', notes.trim())
+
+    if (image) {
+      formData.append('image', image)
     }
 
     try {
@@ -41,10 +51,9 @@ export default function EditReferenceForm({
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify(refData),
+          body: formData,
         }
       )
 
@@ -66,9 +75,39 @@ export default function EditReferenceForm({
     }
   }
 
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !isSubmitting) onCancel()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [onCancel, isSubmitting])
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [])
+
   return (
-    <form className="reference-form" onSubmit={handleSubmit}>
-      <h2>Modifier une inspiration</h2>
+    <div
+      className="modal-overlay"
+      onClick={() => {
+        if (!isSubmitting) onCancel()
+      }}
+    >
+    <form
+      className="reference-form modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-modal-title"
+      onClick={(e) => e.stopPropagation()}
+      onSubmit={handleSubmit}
+    >
+      <h2 id="edit-modal-title">Modifier une inspiration</h2>
 
       <div className="form-group">
         <label htmlFor="edit-title">Titre</label>
@@ -99,16 +138,61 @@ export default function EditReferenceForm({
         </select>
       </div>
 
+
       <div className="form-group">
-        <label htmlFor="edit-imageUrl">Lien de l’image</label>
+        <label htmlFor="edit-image">Image de l’inspiration</label>
+
         <input
-          id="edit-imageUrl"
-          name="imageUrl"
-          type="url"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          id="edit-image"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={(event) => {
+            const file = event.target.files?.[0]
+            if (!file) return
+
+            if (file.size > 2 * 1024 * 1024) {
+              setError('L’image ne doit pas dépasser 2 Mo.')
+              event.target.value = ''
+              return
+            }
+
+            setError('')
+            setImage(file)
+            setImagePreview(URL.createObjectURL(file))
+          }}
         />
+
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="Aperçu de l’image"
+            style={{
+              width: '200px',
+              maxHeight: '200px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+            }}
+          />
+        )}
+
+        {image && (
+          <button
+            type="button"
+            onClick={() => {
+              setImage(null)
+              setImagePreview(
+                reference.imageUrl
+                  ? `http://localhost:3333${reference.imageUrl}`
+                  : ''
+              )
+            }}
+            className="btn-img-cancel"
+          >
+            Annuler le remplacement de l’image
+          </button>
+        )}
       </div>
+
 
       <div className="form-group">
         <label htmlFor="edit-sourceUrl">Lien de la source</label>
@@ -133,13 +217,15 @@ export default function EditReferenceForm({
 
       {error && <p role="alert">{error}</p>}
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Enregistrement...' : 'Enregistrer les modifications'}
-      </button>
-
-      <button type="button" onClick={onCancel} disabled={isSubmitting}>
-        Annuler
-      </button>
+      <div className="edit-form-actions">
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Enregistrement...' : 'Enregistrer les modifications'}
+        </button>
+        <button type="button" onClick={onCancel} disabled={isSubmitting}>
+          Annuler
+        </button>
+      </div>
     </form>
+    </div>
   )
 }

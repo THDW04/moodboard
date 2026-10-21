@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'Inktera';
-    src: url('/fonts/InkteraDemoRegular.woff2') format('woff2'),
-        url('/fonts/InkteraDemoRegular.woff') format('woff');
-    font-weight: normal;
+    font-family: 'Okina';
+    src: url('/fonts/Okina.woff2') format('woff2'),
+        url('/fonts/Okina.woff') format('woff');
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
@@ -16,9 +16,21 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Cabinet';
+    src: url('/fonts/CabinetGrotesk-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root{
-  --title-font: 'Inktera', sans-serif;
+  --title-font: 'Okina', serif;
   --text-font: 'Cabinet', sans-serif;
+  --color-primary: #f6bad6;
+  --color-secondary: #420d19;
+  --background-color: #fffdf7;
+  --color-text: #1a050a;
 }
 
 * {
@@ -27,8 +39,25 @@
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+body {
   font-family: var(--text-font);
+  background-color: var(--background-color);
+  color: var(--color-text);
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--title-font);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.25rem;
 }
 
 p, span, a, li, label, input, button {
@@ -47,19 +76,15 @@ p, span, a, li, label, input, button {
   gap: 8px;
 }
 
-.nav-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  gap: 24px;
-  padding: 12px 24px;
+.moodly-header nav a{
+  text-decoration: none;
+  color: var(--color-text);
 }
 
-.references-container{
+.moodly-header nav a:hover{
+  text-decoration: underline;
+}
+
+.reference-grid-area{
   padding: 12px 24px; 
-}
-
-.reference-thumb{
-  background-color: #da0000 !important;
 }

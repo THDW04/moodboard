@@ -1,0 +1,172 @@
+/* Styles du formulaire, partagés par ReferenceForm et EditReferenceForm */
+.reference-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  color: var(--color-secondary);
+}
+
+/* Groupes de champs */
+.reference-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Labels */
+.reference-form label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Champs texte, URL, sélection et notes */
+.reference-form input:not([type="file"]),
+.reference-form select,
+.reference-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--color-secondary);
+  font-family: var(--text-font);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Placeholder */
+.reference-form input::placeholder,
+.reference-form textarea::placeholder {
+  color: var(--color-secondary);
+  opacity: 0.6;
+}
+
+/* Focus clavier et souris */
+.reference-form input:focus-visible,
+.reference-form select:focus-visible,
+.reference-form textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Liste déroulante */
+.reference-form select {
+  cursor: pointer;
+}
+
+/* Zone de notes */
+.reference-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Champ d'import d'image */
+.reference-form input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px dashed var(--color-secondary);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* Bouton de sélection du fichier */
+.reference-form input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  font-family: var(--text-font);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Aperçu de l'image */
+.reference-form .image-preview {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  max-height: 200px;
+  margin-top: 8px;
+  object-fit: cover;
+  border: 1px solid var(--color-secondary);
+  border-radius: 8px;
+}
+
+/* Messages d'erreur et de succès */
+.reference-form [role="alert"],
+.reference-form [role="status"] {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.reference-form [role="alert"] {
+  font-weight: 600;
+}
+
+.reference-form [role="status"] {
+  font-weight: 500;
+}
+
+/* Bouton principal */
+.reference-form .btn-primary {
+  align-self: flex-start;
+  padding: 10px 16px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  font-family: var(--text-font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.reference-form .btn-primary:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.reference-form .btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.reference-form .btn-primary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.reference-form .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Adaptation mobile */
+@media (max-width: 600px) {
+  .reference-form {
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .reference-form .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}

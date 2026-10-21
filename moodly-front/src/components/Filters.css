@@ -1,0 +1,101 @@
+/* En-tête */
+.moodly-header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.moodly-header nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.moodly-header nav a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.moodly-header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Colonne de navigation */
+.nav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  gap: 24px;
+  padding: 12px 24px;
+  border-right: 1px solid var(--color-secondary);
+  position: sticky;
+  top: 0;
+}
+
+/* Filtres */
+.filters {
+  margin-right: 24px;
+}
+
+.filters-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filters-field span {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.filters-search {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  font-family: var(--text-font);
+}
+
+.filters-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filters-list button {
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;
+  font-family: var(--text-font);
+  font-weight: 500;
+  background: none;
+  border: 1px solid var(--color-secondary);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filters-list button.active {
+  font-weight: 700;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+@media (max-width: 900px) {
+  .nav-container {
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--color-secondary);
+    padding: 24px;
+    height: auto;
+  }
+
+  .filters {
+    margin-right: 0;
+  }
+}

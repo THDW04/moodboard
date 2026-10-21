@@ -1,4 +1,5 @@
 import type { VisualReference } from '../services/references'
+import './GridReferences.css'
 
 type Props = {
   references: VisualReference[]

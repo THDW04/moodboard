@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import './Filters.css'
 
 type Props = {
   categories: string[]
@@ -39,6 +40,7 @@ export default function ReferenceFilters({
             value={search}
             placeholder="Titre..."
             onChange={(e) => onSearchChange(e.target.value)}
+            className="filters-search"
           />
         </label>
 
