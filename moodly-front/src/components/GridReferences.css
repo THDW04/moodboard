@@ -12,7 +12,7 @@
   cursor: pointer;
   break-inside: avoid;
 
-  background-color: var(--color-secondary);
+  border:2px solid var(--color-secondary);
   color: var(--color-primary);
   font-size: 0.875rem;
   font-weight: 600;
@@ -21,7 +21,7 @@
 
 .reference-thumb img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   transition: transform 0.2s ease;
 }
@@ -31,7 +31,7 @@
 }
 
 .reference-thumb.selected {
-  border-color: var(--color-secondary);
+  border-color: rgb(255, 65, 128);
 }
 
 .reference-thumb-empty {
