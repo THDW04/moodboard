@@ -8,20 +8,20 @@ Ce projet est réalisé dans le cadre de l'atelier de développement web en **BU
 
 ## Fonctionnalités
 
-- **Créer** une référence visuelle avec un titre, une catégorie, une URL d'image, une source et des notes.
+- **Créer** une référence visuelle avec un titre, une catégorie, une image, une source et des notes.
 - **Consulter** les références enregistrées dans une interface web.
 - **Modifier** les informations d'une référence existante.
 - **Supprimer** une référence.
-- **Valider les données** envoyées au backend avec VineJS.
-
-Les filtres par catégorie et les améliorations de l'affichage des images sont des évolutions prévues pour rendre l'application plus visuelle et pratique.
+- **Rechercher** une référence à partir de son titre.
+- **Filtrer** les références par catégorie.
+- **Consulter une fiche détail** pour afficher les informations d'une référence.
 
 ## Technologies utilisées
 
 ### Backend
-- [AdonisJS](https://docs.adonisjs.com/) — framework backend.
-- [Lucid ORM](https://lucid.adonisjs.com/docs/introduction) — gestion des données et interactions avec la base de données.
-- [VineJS](https://vinejs.dev/docs/introduction) — validation des données.
+- AdonisJS — framework backend.
+- Lucid ORM — gestion des données et interactions avec la base de données.
+- VineJS — validation des données.
 - SQLite — base de données relationnelle.
 
 ### Frontend
@@ -29,37 +29,80 @@ Les filtres par catégorie et les améliorations de l'affichage des images sont 
 - Vite — environnement de développement frontend.
 - CSS — mise en forme de l'interface.
 
-## Structure du projet
+## Architecture du projet
 
 Le projet est organisé en deux parties :
 
-- `moodly-api/` : backend AdonisJS, routes, contrôleurs, modèles, validateurs et migrations.
-- `moodly-front/` : interface React, composants et styles CSS.
+- moodly-api/ : backend AdonisJS, routes, contrôleurs, modèles, validateurs et migrations.
+- moodly-front/ : interface React, composants et styles CSS.
+
+
+### Base de données
+
+Les références visuelles sont stockées dans une table appelée `visual_references`.
+
+Cette table contient les informations nécessaires à la gestion des références, notamment leur titre, leur catégorie, le chemin de leur image, leur source éventuelle et leurs notes.
+
 
 ## Utilisation de l'intelligence artificielle
 
 L'intelligence artificielle a été utilisée comme outil d'accompagnement pendant le développement.
 
 Elle a notamment permis de :
+
 - Comprendre et mettre en place certaines parties du backend AdonisJS.
 - Être accompagné dans la création des routes, des contrôleurs et de la validation des données.
 - Développer les formulaires et leur communication avec l'API.
 - Comprendre les erreurs rencontrées et rechercher des solutions.
 - Structurer la documentation du projet.
 
-L'utilisation de l'IA nécessite de vérifier les propositions, de tester le code et de comprendre le fonctionnement des fonctionnalités intégrées. Les erreurs rencontrées au cours du développement ont servi à mieux comprendre les échanges entre le frontend, le backend et la base de données.
-
 ## Difficultés et apprentissages
 
-Ce projet permet de mettre en pratique la création d'une application web complète, avec un frontend distinct du backend.
+Ce projet m'a permis de mettre en pratique la création d'une application web complète, avec un frontend distinct du backend.
 
 Les principaux apprentissages concernent :
+
 - La création et l'utilisation d'une API.
 - La gestion des données avec Lucid ORM et SQLite.
 - La mise en place des opérations CRUD.
 - La validation des données avec VineJS.
 - La communication entre React et AdonisJS.
-- Le débogage et l'organisation du code.
+
+## Installation et lancement
+
+### Prérequis
+
+- Node.js et npm installés.
+- Git, si le projet est récupéré depuis un dépôt distant.
+
+### 1. Lancer le backend
+
+Depuis un terminal :
+
+```bash
+cd moodly-api
+npm install
+```
+
+Configurer les variables d'environnement nécessaires, puis créer ou mettre à jour la base de données avec les commandes de migration adaptées au projet.
+
+Lancer ensuite le serveur :
+
+```bash
+node ace serve --watch
+```
+
+### 2. Lancer le frontend
+
+Dans un second terminal :
+
+```bash
+cd moodly-front
+npm install
+npm run dev
+```
+
+Ouvrir ensuite dans le navigateur l'adresse locale indiquée par Vite.
 
 ## Contexte pédagogique
 
